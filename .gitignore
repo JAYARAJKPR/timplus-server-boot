@@ -1,19 +1,20 @@
 # Build artifacts
 target/
-*.jar
 *.war
 *.ear
 *.class
 
+# Exclude most JAR files except timplus-tools
+*.jar
+!timplus-tools-1.0.0.jar
+
 # Exclude large build artifacts
 timplus-server-boot-*.jar
-timplus-tools-*.jar
 
 # Exclude backup directories
 *.backup-*
 
-# Exclude large JAR files but keep them locally
-timplus-tools-1.0.0.jar
+# Note: timplus-tools-1.0.0.jar is included in the repository
 
 # Exclude plugins directory (contains large JAR files)
 plugins/
