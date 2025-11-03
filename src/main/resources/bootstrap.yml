@@ -9,7 +9,9 @@ spring:
   integration.jdbc.initializeSchema: ALWAYS
 
 timplus:
-  domain: domain.com
+  domain: 
+    name: domain.com
+    allowClientCreation: true  # Set to true to allow clients to create domains
   adminUsername: timplus
   adminPassword: timplus
 

@@ -116,6 +116,12 @@
 		    <groupId>com.h2database</groupId>
 		    <artifactId>h2</artifactId>
 		    <scope>test</scope>
+		</dependency>
+		<!-- Override problematic libidn version -->
+		<dependency>
+		    <groupId>org.gnu.inet</groupId>
+		    <artifactId>libidn</artifactId>
+		    <version>0.6.5</version>
 		</dependency>		
 	</dependencies>
 
@@ -184,6 +190,8 @@
 					</execution>
 				</executions>
 			</plugin>			
+		    <!-- JavaDoc plugin disabled due to Java 25 compatibility issues -->
+		    <!--
 		    <plugin>
 		      	<groupId>org.apache.maven.plugins</groupId> 
 		        <artifactId>maven-javadoc-plugin</artifactId>
@@ -209,7 +217,8 @@
 		                </goals>
 		            </execution>
 		        </executions>		        
-		    </plugin>  	
+		    </plugin>
+		    -->  	
 		    <!--  for releases only	 	
 		    <plugin>
 	             <groupId>org.apache.maven.plugins</groupId>

@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.directtruststandards.timplus.cluster.routing.DelegatedRemotePacketRouterFactory;
 import org.directtruststandards.timplus.common.crypto.KeyStoreProtectionManager;
 import org.directtruststandards.timplus.server.monitor.PacketMonitor;
+import org.directtruststandards.timplus.server.handlers.DomainCreationIQHandler;
 import org.jivesoftware.openfire.OfflineMessageStrategy;
 import org.jivesoftware.openfire.RemotePacketRouter;
 import org.jivesoftware.openfire.XMPPServer;
@@ -55,7 +56,7 @@ public class XMPPServerConfig
 	@Value("${openfire.home:.}")
 	protected String openFireHome;
 	
-	@Value("${timplus.domain}")
+	@Value("${timplus.domain.name}")
 	protected String domain;
 	
 	@Value("${timplus.adminUsername}")
@@ -78,6 +79,9 @@ public class XMPPServerConfig
 	
 	@Value("${timplus.server.enableClustering:false}")
 	protected boolean enableClustering;
+	
+	@Value("${timplus.domain.allowClientCreation:false}")
+	protected boolean allowClientDomainCreation;
 	
 	@Bean()
 	@ConditionalOnMissingBean
@@ -112,6 +116,14 @@ public class XMPPServerConfig
 		InterceptorManager.getInstance().addInterceptor(RemoteMUCCache.getInstance()); 
 		
 		final XMPPServer server = new XMPPServer(keyStoreManager);
+		
+		// Register custom domain creation IQ handler if enabled
+		if (allowClientDomainCreation) {
+			server.getIQRouter().addHandler(new DomainCreationIQHandler());
+			LOGGER.info("Domain creation by clients is ENABLED");
+		} else {
+			LOGGER.info("Domain creation by clients is DISABLED");
+		}
 		
 		LOGGER.info("Setting clustered configuration property to " + enableClustering);
 		
